@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arush Gupta — Software Engineer & GenAI/RAG Engineer</title>
+<meta name="description" content="Arush Gupta — Software Engineer building scalable backend systems and production GenAI/RAG applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e17; --bg-soft:#0f1420; --card:#131926; --card-hover:#171f30;
+    --border:#212a3d; --text:#e7ecf5; --text-dim:#8b96ac; --text-faint:#5a6479;
+    --accent:#7c9cff; --accent2:#5eead4; --grad: linear-gradient(120deg,#7c9cff 0%,#a78bfa 45%,#5eead4 100%);
+    --shadow: 0 20px 60px -20px rgba(0,0,0,.6);
+    --radius:16px;
+  }
+  [data-theme="light"]{
+    --bg:#f6f7fb; --bg-soft:#ffffff; --card:#ffffff; --card-hover:#f3f5fa;
+    --border:#e4e7f0; --text:#131826; --text-dim:#5b6478; --text-faint:#8b93a6;
+    --shadow: 0 20px 60px -20px rgba(30,40,80,.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6; overflow-x:hidden;
+    transition:background .4s ease,color .4s ease;
+  }
+  h1,h2,h3,.logo,.nav-link,.tag,.btn,.stat-num{font-family:'Space Grotesk',sans-serif;}
+  code,.mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--accent);color:#fff;}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;background:var(--grad);width:0%;z-index:9999;transition:width .1s;}
+
+  /* nav */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 6vw;backdrop-filter:blur(14px);
+    background:color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom:1px solid var(--border);
+  }
+  .logo{font-weight:700;font-size:1.15rem;letter-spacing:.5px;}
+  .logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .nav-links{display:flex;gap:2rem;align-items:center;}
+  .nav-link{font-size:.92rem;color:var(--text-dim);position:relative;padding:4px 0;transition:color .25s;}
+  .nav-link:hover{color:var(--text);}
+  .nav-link.active{color:var(--text);}
+  .nav-link.active::after{content:'';position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:var(--grad);border-radius:2px;}
+  .theme-toggle{
+    width:38px;height:38px;border-radius:50%;border:1px solid var(--border);
+    background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;
+    transition:transform .3s, background .3s; font-size:1rem;
+  }
+  .theme-toggle:hover{transform:rotate(20deg);}
+  .nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .nav-toggle span{width:24px;height:2px;background:var(--text);display:block;}
+
+  section{padding:130px 6vw 90px;max-width:1180px;margin:0 auto;position:relative;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:18px;
+  }
+  .eyebrow::before{content:'';width:26px;height:1px;background:var(--accent2);}
+  h2.section-title{font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:700;margin-bottom:2.8rem;letter-spacing:-.02em;}
+
+  /* HERO */
+  #hero{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding-top:100px;position:relative;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  }
+  .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.35;}
+  .orb1{width:420px;height:420px;background:#7c9cff;top:-100px;right:-60px;animation:float1 14s ease-in-out infinite;}
+  .orb2{width:380px;height:380px;background:#5eead4;bottom:-140px;left:-80px;animation:float2 16s ease-in-out infinite;}
+  @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,50px)}}
+  @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(50px,-30px)}}
+
+  .hero-kicker{font-family:'JetBrains Mono',monospace;color:var(--accent2);font-size:.95rem;margin-bottom:1.2rem;opacity:0;animation:fadeUp .7s .1s forwards;}
+  h1.hero-name{
+    font-size:clamp(2.6rem,7vw,5.2rem);font-weight:700;letter-spacing:-.03em;line-height:1.03;
+    opacity:0;animation:fadeUp .7s .25s forwards;
+  }
+  .hero-name .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .role-line{
+    margin-top:1.3rem;font-size:clamp(1.1rem,2.4vw,1.5rem);color:var(--text-dim);
+    font-family:'Space Grotesk',sans-serif;font-weight:500;min-height:2.4rem;
+    opacity:0;animation:fadeUp .7s .4s forwards;
+  }
+  #typed::after{content:'|';animation:blink 1s step-end infinite;color:var(--accent);}
+  @keyframes blink{50%{opacity:0;}}
+  .hero-desc{max-width:640px;margin-top:1.6rem;color:var(--text-dim);font-size:1.05rem;opacity:0;animation:fadeUp .7s .55s forwards;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:2.4rem;opacity:0;animation:fadeUp .7s .7s forwards;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;
+    font-size:.92rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all .25s;
+  }
+  .btn-primary{background:var(--grad);color:#0a0e17;}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px -8px rgba(124,156,255,.5);}
+  .btn-ghost{border-color:var(--border);color:var(--text);background:transparent;}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);}
+
+  .stats{display:flex;gap:3rem;margin-top:4rem;flex-wrap:wrap;opacity:0;animation:fadeUp .7s .85s forwards;}
+  .stat-num{font-size:2rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .stat-label{font-size:.82rem;color:var(--text-faint);margin-top:2px;}
+  .scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:var(--text-faint);font-size:.75rem;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bob 2s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:3.5rem;align-items:start;}
+  .about-text p{color:var(--text-dim);margin-bottom:1.1rem;font-size:1.02rem;}
+  .about-text strong{color:var(--text);}
+  .focus-list{display:flex;flex-direction:column;gap:14px;margin-top:1.6rem;}
+  .focus-item{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--card);transition:.3s;}
+  .focus-item:hover{background:var(--card-hover);transform:translateX(4px);}
+  .focus-item .dot{width:8px;height:8px;border-radius:50%;background:var(--grad);margin-top:7px;flex-shrink:0;}
+  .about-side{display:flex;flex-direction:column;gap:14px;}
+  .info-card{border:1px solid var(--border);background:var(--card);border-radius:var(--radius);padding:22px;}
+  .info-card h4{font-size:.78rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-faint);margin-bottom:12px;}
+  .info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.92rem;}
+  .info-row:last-child{border-bottom:none;}
+  .info-row span:first-child{color:var(--text-dim);}
+
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+  .skill-card{border:1px solid var(--border);background:var(--card);border-radius:var(--radius);padding:24px;transition:.3s;}
+  .skill-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--accent);}
+  .skill-card h3{font-size:1rem;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .skill-card h3 .ic{width:34px;height:34px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+  .tag-wrap{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    font-size:.78rem;padding:6px 12px;border-radius:999px;border:1px solid var(--border);
+    color:var(--text-dim);background:var(--bg-soft);cursor:default;transition:.25s;
+  }
+  .tag:hover{border-color:var(--accent2);color:var(--text);transform:translateY(-2px);}
+
+  /* EXPERIENCE timeline */
+  .timeline{position:relative;padding-left:36px;}
+  .timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--accent),var(--accent2));opacity:.4;}
+  .tl-item{position:relative;margin-bottom:14px;}
+  .tl-dot{position:absolute;left:-36px;top:6px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;}
+  .tl-dot::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--grad);}
+  .tl-card{border:1px solid var(--border);background:var(--card);border-radius:var(--radius);padding:26px 28px;}
+  .tl-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .tl-head h3{font-size:1.15rem;}
+  .tl-meta{color:var(--text-faint);font-size:.85rem;font-family:'JetBrains Mono',monospace;}
+  .tl-role{color:var(--accent2);font-size:.92rem;margin-bottom:14px;}
+  .tl-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:6px;}
+  .tl-list li{color:var(--text-dim);font-size:.94rem;padding-left:20px;position:relative;}
+  .tl-list li::before{content:'▹';position:absolute;left:0;color:var(--accent);}
+  .tl-list b{color:var(--text);}
+  .subproj-toggle{
+    margin-top:14px;display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--accent);
+    cursor:pointer;border:none;background:none;font-family:inherit;padding:0;
+  }
+  .subproj-toggle svg{transition:transform .3s;}
+  .subproj-toggle.open svg{transform:rotate(180deg);}
+  .subproj{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+  .subproj.open{max-height:600px;margin-top:16px;}
+  .subproj-item{padding:14px 0;border-top:1px solid var(--border);}
+  .subproj-item h4{font-size:.92rem;margin-bottom:5px;}
+  .subproj-item p{font-size:.87rem;color:var(--text-dim);}
+
+  /* PROJECTS */
+  .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;}
+  .proj-card{
+    border:1px solid var(--border);background:var(--card);border-radius:var(--radius);
+    padding:28px;position:relative;overflow:hidden;transition:transform .35s, box-shadow .35s;
+  }
+  .proj-card::before{
+    content:'';position:absolute;inset:0;background:var(--grad);opacity:0;transition:opacity .35s;z-index:0;
+  }
+  .proj-card:hover{transform:translateY(-8px);box-shadow:var(--shadow);}
+  .proj-badge{display:inline-block;font-size:.7rem;font-family:'JetBrains Mono',monospace;padding:4px 10px;border-radius:999px;background:rgba(124,156,255,.15);color:var(--accent);margin-bottom:14px;}
+  .proj-card h3{font-size:1.2rem;margin-bottom:10px;}
+  .proj-card p{color:var(--text-dim);font-size:.92rem;margin-bottom:16px;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+  .proj-tags span{font-size:.72rem;padding:4px 9px;border-radius:6px;background:var(--bg-soft);border:1px solid var(--border);color:var(--text-faint);}
+  .proj-link{display:inline-flex;align-items:center;gap:6px;font-size:.88rem;color:var(--accent2);font-weight:600;}
+  .proj-link:hover{gap:10px;}
+
+  /* EDUCATION */
+  .edu-card{border:1px solid var(--border);background:var(--card);border-radius:var(--radius);padding:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center;}
+  .edu-card h3{font-size:1.1rem;}
+  .edu-card p{color:var(--text-dim);font-size:.9rem;margin-top:4px;}
+  .edu-badge{font-family:'JetBrains Mono',monospace;color:var(--text-faint);font-size:.85rem;}
+
+  /* CONTACT */
+  #contact{text-align:center;}
+  .contact-card{
+    border:1px solid var(--border);background:var(--card);border-radius:24px;padding:60px 40px;
+    background-image: radial-gradient(circle at 30% 20%, rgba(124,156,255,.08), transparent 60%), radial-gradient(circle at 80% 80%, rgba(94,234,212,.08), transparent 60%);
+  }
+  .contact-card h2{font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:14px;}
+  .contact-card p{color:var(--text-dim);max-width:520px;margin:0 auto 2rem;}
+  .contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  footer{text-align:center;padding:40px 6vw;color:var(--text-faint);font-size:.85rem;border-top:1px solid var(--border);}
+  footer a{color:var(--accent2);}
+
+  .copy-toast{
+    position:fixed;bottom:30px;left:50%;transform:translate(-50%,20px);background:var(--card);border:1px solid var(--accent2);
+    color:var(--text);padding:12px 22px;border-radius:10px;font-size:.85rem;opacity:0;transition:.35s;z-index:2000;pointer-events:none;
+  }
+  .copy-toast.show{opacity:1;transform:translate(-50%,0);}
+
+  #topbtn{
+    position:fixed;bottom:26px;right:26px;width:44px;height:44px;border-radius:50%;
+    background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:900;
+  }
+  #topbtn.show{opacity:1;pointer-events:auto;}
+  #topbtn:hover{border-color:var(--accent);transform:translateY(-3px);}
+
+  @media(max-width:860px){
+    .about-grid{grid-template-columns:1fr;}
+    .nav-links{
+      position:fixed;top:70px;right:0;height:calc(100vh - 70px);width:240px;
+      background:var(--bg-soft);border-left:1px solid var(--border);flex-direction:column;
+      padding:30px;align-items:flex-start;transform:translateX(100%);transition:transform .35s;
+    }
+    .nav-links.open{transform:translateX(0);}
+    .nav-toggle{display:flex;}
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<div id="progress"></div>
+
+<nav>
+  <div class="logo">Arush<span>.dev</span></div>
+  <div class="nav-links" id="navLinks">
+    <a class="nav-link" data-sec="hero" href="#hero">Home</a>
+    <a class="nav-link" data-sec="about" href="#about">About</a>
+    <a class="nav-link" data-sec="skills" href="#skills">Skills</a>
+    <a class="nav-link" data-sec="experience" href="#experience">Experience</a>
+    <a class="nav-link" data-sec="projects" href="#projects">Projects</a>
+    <a class="nav-link" data-sec="education" href="#education">Education</a>
+    <a class="btn btn-ghost" style="padding:8px 18px;" href="Arush_Gupta_Resume.pdf" target="_blank">Resume ↓</a>
+  </div>
+  <div style="display:flex;gap:12px;align-items:center;">
+    <div class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</div>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"><div class="orb orb1"></div><div class="orb orb2"></div></div>
+  <div class="hero-kicker mono">// Hi, my name is</div>
+  <h1 class="hero-name">Arush Gupta<br><span class="grad">I build backend systems &amp; GenAI products.</span></h1>
+  <div class="role-line">I'm a <span id="typed"></span></div>
+  <p class="hero-desc">Software Engineer at Tredence Inc. designing scalable, distributed backend systems and production-grade LLM/RAG applications — currently also building an AI-powered legal-tech startup on the side.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#projects">See my work</a>
+    <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    <a class="btn btn-ghost" href="https://github.com/Arushgup" target="_blank">GitHub ↗</a>
+    <a class="btn btn-ghost" href="https://www.linkedin.com/in/arush-gupta-tech/" target="_blank">LinkedIn ↗</a>
+  </div>
+  <div class="stats">
+    <div><div class="stat-num">2+</div><div class="stat-label">Years Experience</div></div>
+    <div><div class="stat-num">$800K+</div><div class="stat-label">Cost Savings Delivered</div></div>
+    <div><div class="stat-num">99.9%</div><div class="stat-label">System Reliability</div></div>
+    <div><div class="stat-num">4+</div><div class="stat-label">Production Platforms</div></div>
+  </div>
+  <div class="scroll-cue mono">SCROLL<br>↓</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="eyebrow">01 · About</div>
+  <h2 class="section-title reveal">Who I am</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p><strong>Software Engineer and GenAI/AI Engineer</strong> with 2+ years building scalable backend systems and production-grade LLM/RAG applications. I work across the stack — from distributed, high-throughput backend architecture (Java, Spring Boot, Kafka) to modern GenAI systems (LangChain, RAG, prompt engineering, agentic workflows, MCP).</p>
+      <p>At <strong>Tredence Inc.</strong>, I've delivered enterprise platforms driving <strong>20%+ cost optimization</strong> and <strong>60%+ reduction in manual effort</strong> through GenAI automation, distributed systems, and CI/CD-driven engineering for Fortune 500 clients.</p>
+      <p>Outside my day job, I'm the <strong>founder of an AI-powered Legal Process Outsourcing (LPO) startup</strong> — combining GenAI document understanding with human expert review to help US law firms cut review time and cost.</p>
+      <div class="focus-list">
+        <div class="focus-item"><div class="dot"></div><div><b>Backend &amp; Distributed Systems</b> — Java, Spring Boot, FastAPI, Kafka, microservices, high-throughput event-driven architecture.</div></div>
+        <div class="focus-item"><div class="dot"></div><div><b>GenAI / Applied AI</b> — LLMs, RAG, LangChain, Model Context Protocol (MCP), prompt engineering, vector embeddings, agentic workflows.</div></div>
+        <div class="focus-item"><div class="dot"></div><div><b>Engineering Rigor</b> — TDD, CI/CD, system design, 99.9% reliability across production platforms.</div></div>
+      </div>
+    </div>
+    <div class="about-side reveal">
+      <div class="info-card">
+        <h4>Quick Info</h4>
+        <div class="info-row"><span>Location</span><span>Gurugram, India</span></div>
+        <div class="info-row"><span>Role</span><span>Software Engineer (Analyst)</span></div>
+        <div class="info-row"><span>Company</span><span>Tredence Inc.</span></div>
+        <div class="info-row"><span>Focus</span><span>Backend + GenAI</span></div>
+        <div class="info-row"><span>Email</span><span class="mono" style="cursor:pointer;" onclick="copyEmail()">garush901@gmail.com</span></div>
+      </div>
+      <div class="info-card">
+        <h4>Elsewhere</h4>
+        <div class="info-row"><span>GitHub</span><a href="https://github.com/Arushgup" target="_blank">Arushgup ↗</a></div>
+        <div class="info-row"><span>LinkedIn</span><a href="https://www.linkedin.com/in/arush-gupta-tech/" target="_blank">arush-gupta-tech ↗</a></div>
+        <div class="info-row"><span>AI Job Copilot</span><a href="http://132.226.189.54/" target="_blank">Live Demo ↗</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="eyebrow">02 · Skills</div>
+  <h2 class="section-title reveal">Technical toolbox</h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <h3><span class="ic">🤖</span> AI / GenAI</h3>
+      <div class="tag-wrap">
+        <span class="tag">LLMs (GPT-4, Claude)</span><span class="tag">LangChain</span><span class="tag">RAG</span>
+        <span class="tag">Model Context Protocol (MCP)</span><span class="tag">Prompt Engineering</span>
+        <span class="tag">Vector Databases</span><span class="tag">Agentic AI</span><span class="tag">NLP</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <h3><span class="ic">⚙️</span> Backend &amp; Frontend</h3>
+      <div class="tag-wrap">
+        <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Python</span>
+        <span class="tag">FastAPI</span><span class="tag">React.js</span><span class="tag">REST APIs</span><span class="tag">Microservices</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <h3><span class="ic">📡</span> Data Engineering</h3>
+      <div class="tag-wrap">
+        <span class="tag">Apache Kafka</span><span class="tag">PySpark</span><span class="tag">ETL Pipelines</span>
+        <span class="tag">Stream Processing</span><span class="tag">Redis</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <h3><span class="ic">☁️</span> Cloud &amp; DevOps</h3>
+      <div class="tag-wrap">
+        <span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">Azure</span>
+        <span class="tag">GCP</span><span class="tag">CI/CD</span><span class="tag">GitHub Actions</span><span class="tag">System Design</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <h3><span class="ic">🗄️</span> Databases</h3>
+      <div class="tag-wrap">
+        <span class="tag">MySQL</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">DB Optimization</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <h3><span class="ic">✅</span> Practices</h3>
+      <div class="tag-wrap">
+        <span class="tag">TDD</span><span class="tag">JUnit</span><span class="tag">PyTest</span>
+        <span class="tag">Agile/Scrum</span><span class="tag">Distributed Systems</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="eyebrow">03 · Experience</div>
+  <h2 class="section-title reveal">Where I've worked</h2>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-head">
+          <h3>Software Engineer (Analyst) — Tredence Inc.</h3>
+          <span class="tl-meta">Aug 2023 — Present</span>
+        </div>
+        <div class="tl-role">Backend &amp; GenAI · Gurugram, India</div>
+        <ul class="tl-list">
+          <li>Designed and delivered scalable, distributed backend systems and GenAI-powered platforms, improving delivery timelines by <b>30%+</b> and cutting operational costs by <b>20%+</b> for Fortune 500 enterprise clients.</li>
+          <li>Built production LLM and RAG applications using <b>LangChain</b> and prompt engineering to automate document and code understanding, reducing manual effort by <b>60%+</b>.</li>
+          <li>Implemented <b>TDD</b> and automated <b>CI/CD</b> pipelines, achieving <b>99.9%</b> system reliability and 100% on-time delivery across 4+ production-grade platforms.</li>
+          <li>Engineered high-throughput, event-driven architectures processing <b>1M+ records/day</b> using <b>Kafka</b> and <b>Spring Boot</b> microservices.</li>
+        </ul>
+        <button class="subproj-toggle" id="projToggle" onclick="toggleProjects()">
+          View key projects
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="subproj" id="projPanel">
+          <div class="subproj-item">
+            <h4>☁️ Cloud Billing &amp; Cost Optimization Platform</h4>
+            <p>Architected a distributed billing system (Kafka, Redis, Spring Boot) handling 1M+ records daily with real-time anomaly detection — saving <b>$500K+</b> annually.</p>
+          </div>
+          <div class="subproj-item">
+            <h4>🔁 LLM-Based ETL Code Converter (RAG Platform)</h4>
+            <p>Built an automated code-conversion platform (FastAPI, LangChain) with <b>90%+ accuracy</b> via semantic evaluation benchmarks — saving <b>$300K+</b> in migration costs.</p>
+          </div>
+          <div class="subproj-item">
+            <h4>🧮 Data Migration &amp; Transformation Platform</h4>
+            <p>Optimized TB-scale data pipelines (PySpark, Kafka), cutting manual validation effort by <b>50%</b> while improving data integrity via automated schema checks.</p>
+          </div>
+          <div class="subproj-item">
+            <h4>📊 AI Analytics Dashboard (RAG + GenAI)</h4>
+            <p>Developed a real-time RAG-powered analytics dashboard using vector embeddings and semantic search — cutting analyst manual workload by <b>40%</b>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="eyebrow">04 · Projects</div>
+  <h2 class="section-title reveal">Things I've built</h2>
+  <div class="proj-grid">
+    <div class="proj-card reveal">
+      <span class="proj-badge">PERSONAL PROJECT · 2024</span>
+      <h3>AI Job Copilot</h3>
+      <p>End-to-end agentic microservices platform automating job search — LLM-powered resume parsing and semantic job matching via tool-calling/MCP-style agent orchestration, with fault-tolerant workflows validated by unit and integration tests. Distributed multi-service deployment for real-time, asynchronous event processing.</p>
+      <div class="proj-tags"><span>FastAPI</span><span>Spring Boot</span><span>Kafka</span><span>LangChain</span><span>Docker</span><span>JUnit</span></div>
+      <a class="proj-link" href="http://132.226.189.54/" target="_blank">Live Demo →</a>
+    </div>
+    <div class="proj-card reveal">
+      <span class="proj-badge">FOUNDER · 2025 — PRESENT</span>
+      <h3>AI-Powered Legal Process Outsourcing (LPO) Platform</h3>
+      <p>A tech-enabled LPO platform helping small and mid-sized US law firms cut the time and cost of reviewing legal and medical documents. GenAI performs extraction, summarization, and document understanding; trained legal and medical reviewers validate every output for law-firm-grade accuracy — an AI + human-expert hybrid model, not just SaaS.</p>
+      <div class="proj-tags"><span>LLMs</span><span>RAG</span><span>Document AI</span><span>Human-in-the-Loop</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="eyebrow">05 · Education</div>
+  <h2 class="section-title reveal">Academic background</h2>
+  <div class="edu-card reveal">
+    <div>
+      <h3>Thapar Institute of Engineering &amp; Technology</h3>
+      <p>Bachelor of Engineering, Computer Science — Patiala, India</p>
+    </div>
+    <div class="edu-badge">2019 — 2023</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="eyebrow" style="justify-content:center;">06 · Contact</div>
+  <div class="contact-card reveal">
+    <h2>Let's build something.</h2>
+    <p>Open to Software Engineer, Backend Engineer, and GenAI/AI Engineer roles — and always happy to talk shop about RAG systems, agentic AI, or legal-tech.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:garush901@gmail.com">Email Me</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/arush-gupta-tech/" target="_blank">LinkedIn</a>
+      <a class="btn btn-ghost" href="https://github.com/Arushgup" target="_blank">GitHub</a>
+      <a class="btn btn-ghost" href="Arush_Gupta_Resume.pdf" target="_blank">Download Resume</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Designed &amp; built by Arush Gupta · <a href="mailto:garush901@gmail.com">garush901@gmail.com</a> · +91-9660756638
+</footer>
+
+<div class="copy-toast" id="toast">Email copied to clipboard ✓</div>
+<div id="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+  // typing effect
+  const roles = ["Software Engineer.", "GenAI / RAG Engineer.", "Backend Architect.", "Startup Founder.", "Problem Solver."];
+  const typedEl = document.getElementById('typed');
+  let ri=0, ci=0, deleting=false;
+  function typeLoop(){
+    const word = roles[ri];
+    if(!deleting){
+      ci++;
+      typedEl.textContent = word.slice(0,ci);
+      if(ci===word.length){ deleting=true; setTimeout(typeLoop, 1400); return; }
+    } else {
+      ci--;
+      typedEl.textContent = word.slice(0,ci);
+      if(ci===0){ deleting=false; ri=(ri+1)%roles.length; }
+    }
+    setTimeout(typeLoop, deleting?35:70);
+  }
+  typeLoop();
+
+  // theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', ()=>{
+    const body = document.body;
+    const isLight = body.getAttribute('data-theme')==='light';
+    body.setAttribute('data-theme', isLight?'dark':'light');
+    themeToggle.textContent = isLight?'🌙':'☀️';
+  });
+
+  // mobile nav
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', ()=> navLinks.classList.toggle('open'));
+  document.querySelectorAll('.nav-link').forEach(l=>l.addEventListener('click',()=>navLinks.classList.remove('open')));
+
+  // scroll progress + active nav + topbtn
+  const sections = document.querySelectorAll('section[id]');
+  const navItems = document.querySelectorAll('.nav-link');
+  const topbtn = document.getElementById('topbtn');
+  window.addEventListener('scroll', ()=>{
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+    document.getElementById('progress').style.width = scrolled+'%';
+    topbtn.classList.toggle('show', h.scrollTop>500);
+
+    let current='';
+    sections.forEach(sec=>{
+      const rect = sec.getBoundingClientRect();
+      if(rect.top<=120 && rect.bottom>=120) current = sec.id;
+    });
+    navItems.forEach(l=> l.classList.toggle('active', l.dataset.sec===current));
+  });
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // project sub-toggle
+  function toggleProjects(){
+    document.getElementById('projPanel').classList.toggle('open');
+    document.getElementById('projToggle').classList.toggle('open');
+  }
+
+  // copy email
+  function copyEmail(){
+    navigator.clipboard.writeText('garush901@gmail.com');
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 2000);
+  }
+
+  // card tilt
+  document.querySelectorAll('.proj-card, .skill-card').forEach(card=>{
+    card.addEventListener('mousemove', e=>{
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX-r.left)/r.width - .5;
+      const y = (e.clientY-r.top)/r.height - .5;
+      card.style.transform = `perspective(600px) rotateY(${x*4}deg) rotateX(${-y*4}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', ()=>{ card.style.transform=''; });
+  });
+</script>
+</body>
+</html>
